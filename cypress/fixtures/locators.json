@@ -1,0 +1,36 @@
+{
+    "navigation" : {
+        "loginButton" : "a[href='/login']",
+        "logoutButton": ".ml-auto > :nth-child(3) > .nav-link",
+        "registerButton" :"a[href='/register']",
+        "submitButton" : "form > :nth-child(4)"
+    },
+
+    "loginPage" : {
+        "email" : "input[id='email']",
+        "password":"input[id='password']" ,
+        "submitButn" : "button[type='submit']",
+        "title" : ".title-style",
+        "validationError" : "p[class='alert alert-danger']"
+    },
+
+    "registerPage" : {
+        "userName" : "#first-name",
+        "userLastname":"#last-name",
+        "email":"#email",
+        "password" :"#password",
+        "confirmPassword" :"#password-confirmation",
+        "checkInput":".form-check-input",
+        "submitButtn":"button[type='submit']",
+        "error" : "p[class='alert alert-danger']"
+    },
+
+    "createGallery" : {
+        "CreateGallery" : ".mr-auto > :nth-child(3) > .nav-link",
+        "title" : "#title",
+        "description" : "#description",
+        "url" : ".input-group > .form-control",
+        "addImage" : "form > :nth-child(4)"
+        
+    }
+}

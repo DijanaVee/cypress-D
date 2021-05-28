@@ -1,3 +1,7 @@
 {
-    "baseUrl":"https://gallery-app.vivifyideas.com/"
+    "baseUrl":"https://gallery-app.vivifyideas.com/",
+    "env" :{
+        "userName" : "dijana.vidovic79@gmail.com",
+        "password" : "DijanaV84"
+    }
 }

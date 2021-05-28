@@ -1,30 +1,61 @@
- describe ('login spec',() => {
-     it ('visit gallery app', () => {
-        cy.visit ('https://gallery-app.vivifyideas.com')
+/// <reference types="Cypress"/>
+
+/*const locators=require ("../../fixtures/locators.json")
+const faker=require ('faker');
+
+describe ('login spec',() => {
+     beforeEach (() =>{
+         cy.visit ('')
+         cy.get(locators.navigation.loginButton).click()
+         
+     })
+//upisi faker-a!!!!!!!!
+    it ('positive login', () => {
+        cy.get(locators.loginPage.email).type('dijana.vidovic73269@gmail.com')
+        cy.get(locators.loginPage.password).type('test1111')
+        cy.get(locators.loginPage.submitButn).click()  
+        cy.get(locators.navigation.logoutButton).click();
+
+    })
+})*/
+
+const locators=require ("../../fixtures/locators.json")
+
+import { authLogin} from '../../pageObjects/loginPage.js'
+
+describe ('login spec',() => {
+    beforeEach (() =>{
+        cy.visit ('')
+        cy.get(locators.navigation.loginButton).click()
+        cy.url().should('include', '/login')
+        cy.get(locators.loginPage.title).should('have.text', 'Please login')
+        
     })
 
-    it ('click login button', ()=> {
-        cy.get ('a[class="nav-link nav-buttons"]').eq(0).click()
+    it('negative case login / bad email', () => {
+        cy.get(locators.loginPage.email).type(faker.internet.email())
+        cy.get(locators.loginPage.password).type(faker.internet.password())
+        cy.get(locators.loginPage.submitButn).click()
+        cy.get(locators.loginPage.validationError).should('be.visile')
+        cy.get(locators.loginPage.validationError).should('have,text', 'Bad Credentials')
+        cy,get(locators.loginPage.validationError).should('have.css', 'background-color', 'rgb(248,215, 218)')
+
     })
 
-    it ('enter user name', () => {
-        cy.get ('input[id="email"]').type('dijana.vidovic73269@gmail.com')
+   it ('login with valid credentials', () => {
+       authLogin.login('dijana.vidovic79@gmail.com', 'DijanaV84')
+
     })
 
-    it ('enter password', () => {
-        cy.get ('input[id="password"]').type('test1111')
-    })
-
-    it ('click submit', () => {
-            cy.get ('button[type="submit"]').click ()  
-    })
-})
-
- describe('logout', () =>{
-         it ('click logout' , ()=> {
-             cy.get('.ml-auto > :nth-child(3) > .nav-link').click();
-
+    it.only('login with valid credentials', () => {
+        cy.intercept ('POST', 'https://gallery-api.vivifyideas.com/api/auth/login',(req) => {
+    }).as ('validLogin')
+        cy.get(locators.loginPage.email).type('dijana.vidovic79@gmail.com')
+        cy.get(locators.loginPage.password).type ('DijanaV84')
+        cy.get(locators.loginPage.submitButn).click()
+        cy.wait('@validLogin').then((intercept) => {
+            expect(intercept.response.statusCode).to.eql(200)
         })
- })
-
+     })
  
+  })
